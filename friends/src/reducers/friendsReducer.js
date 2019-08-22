@@ -1,4 +1,4 @@
-  import {
+import {
   FETCH_FRIENDS,
   FETCH_FRIENDS_SUCCESS,
   REQUEST_ERROR,
@@ -11,29 +11,36 @@
   LOGIN,
   LOGIN_SUCCESS,
   LOAD_TOKEN,
-} from '../actions';
+  LOG_OUT
+} from "../actions";
 
-
-const initialState = {  
-  deletingFriend: false,
-  fetchingFriends: false,
-  friends: [],
+const initialState = {
   loggingIn: false,
+  fetchingFriends: false,
   savingFriend: false,
   updatingFriend: false,
+  deletingFriend: false,
+  friends: [],
   error: null,
-  token: null,
   loggedIn: false,
+  token: null
 };
 
 export const friendsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOG_OUT:
+      return { ...state, loggedIn: false };
     case LOAD_TOKEN:
       return { ...state, loggedIn: true, token: action.payload };
     case LOGIN:
       return { ...state, fetchingFriends: true };
     case LOGIN_SUCCESS:
-      return { ...state, loggingIn: false, token: action.payload, loggedIn: true };
+      return {
+        ...state,
+        loggingIn: false,
+        token: action.payload,
+        loggedIn: true
+      };
     case FETCH_FRIENDS:
       return { ...state, fetchingFriends: true };
     case FETCH_FRIENDS_SUCCESS:
